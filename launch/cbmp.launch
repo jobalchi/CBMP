@@ -1,0 +1,30 @@
+<launch>
+    <arg name="interval_sec" default="0.1"/>
+    <arg name="num_prediction" default="20"/>
+    <arg name="filter_out_close_object_threshold" default="1.0"/>
+    <arg name="filter_out_far_object_threshold" default="80.0"/>
+    <arg name="k" default="0.5"/>
+    <arg name="Kp" default="1.0"/>
+    <arg name="L" default="2.720"/>
+    <arg name="max_steer" default="120.0"/>
+    <arg name="max_accel" default="3.0"/>
+    <arg name="min_accel" default="-2.0"/>
+    <arg name="input_topic" default="/tracking/car"/>
+
+    <remap from="/detection/objects" to="$(arg input_topic)"/>
+
+    <node pkg="cbmp" type="cbmp_node" name="cbmp_node">
+        <param name="interval_sec" value="$(arg interval_sec)"/>
+        <param name="num_prediction" value="$(arg num_prediction)"/>
+        <param name="filter_out_close_object_threshold" value="$(arg filter_out_close_object_threshold)"/>
+        <param name="filter_out_far_object_threshold" value="$(arg filter_out_far_object_threshold)"/>
+        <param name="k" value="$(arg k)"/>
+        <param name="Kp" value="$(arg Kp)"/>
+        <param name="L" value="$(arg L)"/>
+        <param name="max_steer" value="$(arg max_steer)"/>
+        <param name="max_accel" value="$(arg max_accel)"/>
+        <param name="min_accel" value="$(arg min_accel)"/>
+    </node>
+
+    <node pkg="cbmp" type="cbmp_visual_node" name="cbmp_visual_node" output="screen"/>
+</launch>
